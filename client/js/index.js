@@ -17,8 +17,8 @@ class Login {
 
   sendForm(){
     let form_data = new FormData();
-    form_data.append('username', $('#user').val())
-    form_data.append('password', $('#password').val())
+    form_data.append('user', $('#user').val())
+    form_data.append('pass', $('#password').val())
     $.ajax({
       url: '../server/check_login.php',
       dataType: "json",
@@ -34,7 +34,8 @@ class Login {
           alert(php_response.msg);
         }
       },
-      error: function(){
+      error: function(error){
+        console.log(error);
         alert("error en la comunicación con el servidor");
       }
     })
