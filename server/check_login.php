@@ -11,14 +11,14 @@
 	if ($conexion->connect_error) {
 	   die("Connection failed: " . $conexion->connect_error);
 	} else {
-		// $clave_encode = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+		
 	    $sql = "SELECT * FROM usuario WHERE usuario = '".$_POST['user']."' ";
 	    $result = $conexion->query($sql);
 	    if($result->num_rows > 0){
 	    	$row = $result->fetch_assoc();
 	    	if(password_verify($_POST['pass'], $row["clave"])){
 	    		$arrayName = array('msg' => 'OK');
-		    	// $row = $result->fetch_assoc();
+		    	
 		    	$_SESSION["_id_user"] = $row["id"];
 	    	}else{
 	    		$arrayName = array('msg' => 'Usuario o clave errada.');
