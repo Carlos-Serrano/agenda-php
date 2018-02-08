@@ -21,7 +21,7 @@ class EventsManager {
               this.poblarCalendario(data.eventos)
             }else {
               alert(data.msg)
-              window.location.href = 'index.html';
+              // window.location.href = 'index.html';
             }
           },
           error: function(){
@@ -38,7 +38,7 @@ class EventsManager {
         		center: 'title',
         		right: 'month,agendaWeek,basicDay'
         	},
-        	defaultDate: '2016-11-01',
+        	defaultDate: '2018-02-01',
         	navLinks: true,
         	editable: true,
         	eventLimit: true,
@@ -97,12 +97,14 @@ class EventsManager {
             alert('Se ha añadido el evento exitosamente')
             if (document.getElementById('allDay').checked) {
               $('.calendario').fullCalendar('renderEvent', {
+                id: data.id,
                 title: $('#titulo').val(),
                 start: $('#start_date').val(),
                 allDay: true
               })
             }else {
               $('.calendario').fullCalendar('renderEvent', {
+                id: data.id,
                 title: $('#titulo').val(),
                 start: $('#start_date').val()+" "+$('#start_hour').val(),
                 allDay: false,
@@ -110,7 +112,7 @@ class EventsManager {
               })
             }
 
-
+            location.reload();
 
 
           }else {
@@ -165,7 +167,6 @@ class EventsManager {
         end_date = end.substr(0,10)
         start_hour = start.substr(11,8)
         end_hour = end.substr(11,8)
-
 
         form_data.append('id', id)
         form_data.append('start_date', start_date)

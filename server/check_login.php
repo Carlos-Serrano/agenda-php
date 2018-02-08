@@ -1,4 +1,6 @@
 <?php
+	session_start();
+	
 	require("conexion.php");
 
 	$conexion = new mysqli($servername, $username, $password, $dataBaseName);
@@ -9,10 +11,19 @@
 	if ($conexion->connect_error) {
 	   die("Connection failed: " . $conexion->connect_error);
 	} else {
-	    $sql = "SELECT * FROM usuario WHERE usuario = '".$_POST['user']."' AND clave = '".$_POST['pass']."'";
+		// $clave_encode = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+	    $sql = "SELECT * FROM usuario WHERE usuario = '".$_POST['user']."' ";
 	    $result = $conexion->query($sql);
 	    if($result->num_rows > 0){
-	    	$arrayName = array('msg' => 'OK');
+	    	$row = $result->fetch_assoc();
+	    	if(password_verify($_POST['pass'], $row["clave"])){
+	    		$arrayName = array('msg' => 'OK');
+		    	// $row = $result->fetch_assoc();
+		    	$_SESSION["_id_user"] = $row["id"];
+	    	}else{
+	    		$arrayName = array('msg' => 'Usuario o clave errada.');
+	    	}
+	    	
 	    }else{
 	    	$arrayName = array('msg' => 'Usuario o clave errada.');
 	    }
